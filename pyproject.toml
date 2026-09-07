@@ -1,0 +1,56 @@
+[project]
+name = "tgkit"
+version = "0.1.0"
+description = "Delivery toolkit on top of aiogram: Telegram-safe markdown, rate-limit-aware sends, rich messages, streamed agent turns"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "RoCry", email = "crysheen@gmail.com" }]
+requires-python = ">=3.12"
+dependencies = [
+    # >=3.30 covers Bot API 10.x Rich Messages (InputRichMessage, InputRichMessageMedia).
+    "aiogram>=3.30",
+    "pillow>=11",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications :: Chat",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed",
+]
+keywords = ["telegram", "aiogram", "bot", "markdown", "rich-messages", "streaming"]
+
+[project.urls]
+Homepage = "https://github.com/rocrp/tgkit"
+Repository = "https://github.com/rocrp/tgkit"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=1",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tgkit"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
