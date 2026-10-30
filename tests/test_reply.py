@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, cast
 
 import pytest
 from fakes import api_error
-
 from tgkit import prefix_within_utf16_limit, utf16_len
 from tgkit.constants import truncate_text
 from tgkit.reply import DraftOutcome, EditMessageOutcome, is_draft_unsupported_error, split_message

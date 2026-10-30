@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-
 from tgkit.constants import (
     MAX_RICH_BLOCKS,
     MAX_RICH_MEDIA,
@@ -392,9 +391,7 @@ async def test_inline_kinds_narrows_what_gets_lifted(tmp_path: Path):
     video.write_bytes(b"\x00" * 32)
     source = f"![pic]({image})\n\n![clip]({video})"
 
-    async with build_rich_payload(
-        source, max_bytes=20 * MEGABYTE, inline_kinds=frozenset({"photo"})
-    ) as payload:
+    async with build_rich_payload(source, max_bytes=20 * MEGABYTE, inline_kinds=frozenset({"photo"})) as payload:
         assert len(payload.media) == 1
         assert "tg://photo?id=m0" in payload.markdown
         assert f"![clip]({video})" in payload.markdown
@@ -426,7 +423,6 @@ def test_media_classification_by_suffix():
 
 async def test_oversized_image_is_resized_below_the_dimension_cap(tmp_path: Path):
     from PIL import Image
-
     from tgkit.media import prepared_images
 
     original = write_png(tmp_path / "big.png", (MAX_IMAGE_DIMENSION + 500, 1000))
@@ -438,9 +434,7 @@ async def test_oversized_image_is_resized_below_the_dimension_cap(tmp_path: Path
         assert upload != original
         with Image.open(upload) as resized:
             assert max(resized.size) <= MAX_IMAGE_DIMENSION
-            assert resized.size[0] / resized.size[1] == pytest.approx(
-                (MAX_IMAGE_DIMENSION + 500) / 1000, rel=0.01
-            )
+            assert resized.size[0] / resized.size[1] == pytest.approx((MAX_IMAGE_DIMENSION + 500) / 1000, rel=0.01)
         temp_dir = upload.parent
     assert not temp_dir.exists()  # cleaned up on context exit
 
@@ -455,7 +449,6 @@ async def test_small_image_is_passed_through_without_a_copy(tmp_path: Path):
 
 async def test_animated_gif_keeps_every_frame_when_resized(tmp_path: Path):
     from PIL import Image
-
     from tgkit.media import prepared_images
 
     original = write_animated_gif(tmp_path / "anim.gif", (MAX_IMAGE_DIMENSION + 100, 200), frames=4)

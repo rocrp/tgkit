@@ -17,10 +17,10 @@ from .retry import RateLimitError, as_rate_limit, call_absorbing_rate_limits, se
 __all__ = [
     "EditMessageOutcome",
     "RateLimitError",
-    "is_not_modified",
     "delete_message_safe",
     "edit_message_safe",
     "edit_message_text_raw",
+    "is_not_modified",
 ]
 
 

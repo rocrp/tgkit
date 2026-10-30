@@ -9,11 +9,11 @@ test:
 
 # Format and auto-fix lint findings
 lint:
-    uv run ruff format src tests
-    uv run ruff check --fix src tests
+    uvx ruff format src tests
+    uvx ruff check --fix src tests
 
 # CI gate: formatting, lint and tests must all pass untouched
 check:
-    uv run ruff format --check src tests
-    uv run ruff check src tests
+    uvx ruff format --check src tests
+    uvx ruff check src tests
     uv run pytest -q

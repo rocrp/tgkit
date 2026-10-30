@@ -132,13 +132,9 @@ class RichPayload:
         if not self.markdown:
             raise RichContractError("rich markdown cannot be empty")
         if (length := rich_len(self.markdown)) > MAX_RICH_MESSAGE_LENGTH:
-            raise RichContractError(
-                f"rich markdown is {length} characters, over the {MAX_RICH_MESSAGE_LENGTH} limit"
-            )
+            raise RichContractError(f"rich markdown is {length} characters, over the {MAX_RICH_MESSAGE_LENGTH} limit")
         if len(self.media) > MAX_RICH_MEDIA:
-            raise RichContractError(
-                f"rich message carries {len(self.media)} media, over the {MAX_RICH_MEDIA} limit"
-            )
+            raise RichContractError(f"rich message carries {len(self.media)} media, over the {MAX_RICH_MEDIA} limit")
 
     def fits(self) -> bool:
         """Whether the payload is within the locally checkable limits."""
@@ -185,9 +181,7 @@ async def send_rich(
     payload = _as_payload(markdown)
     payload.validate()
     if THINKING_OPEN in payload.markdown:
-        raise RichContractError(
-            f"{THINKING_OPEN} is valid only in drafts and must never reach sendRichMessage"
-        )
+        raise RichContractError(f"{THINKING_OPEN} is valid only in drafts and must never reach sendRichMessage")
 
     kwargs: dict[str, Any] = {"chat_id": chat_id, "rich_message": _input_rich_message(payload)}
     if thread_id is not None:
@@ -252,9 +246,7 @@ async def edit_rich(
     payload = _as_payload(markdown)
     payload.validate()
     if THINKING_OPEN in payload.markdown:
-        raise RichContractError(
-            f"{THINKING_OPEN} is valid only in drafts and must never reach editMessageText"
-        )
+        raise RichContractError(f"{THINKING_OPEN} is valid only in drafts and must never reach editMessageText")
     kwargs: dict[str, Any] = {
         "chat_id": chat_id,
         "message_id": message_id,

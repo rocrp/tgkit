@@ -9,7 +9,6 @@ import re
 from typing import get_args
 
 import pytest
-
 import tgkit
 from tgkit.turn import DraftTransport, EditTransport, Turn
 
@@ -125,9 +124,7 @@ def test_package_exports_and_submodule_surfaces_agree() -> None:
     for name in modules:
         module = importlib.import_module(f"tgkit.{name}")
         missing = [
-            symbol
-            for symbol in getattr(module, "__all__", [])
-            if not symbol.startswith("_") and symbol not in exported
+            symbol for symbol in getattr(module, "__all__", []) if not symbol.startswith("_") and symbol not in exported
         ]
         if missing:
             gaps[name] = sorted(missing)

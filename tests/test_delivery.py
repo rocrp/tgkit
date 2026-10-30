@@ -6,7 +6,6 @@ from typing import Any
 
 import pytest
 from fakes import api_error
-
 from tgkit.constants import MAX_CAPTION_LENGTH, MAX_MESSAGE_LENGTH, utf16_len
 from tgkit.delivery import link_preview_options, reply_parameters, send_text
 from tgkit.message_misc import fit_caption

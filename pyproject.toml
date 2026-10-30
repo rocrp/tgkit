@@ -31,11 +31,7 @@ Homepage = "https://github.com/rocrp/tgkit"
 Repository = "https://github.com/rocrp/tgkit"
 
 [dependency-groups]
-dev = [
-    "pytest>=8",
-    "pytest-asyncio>=1",
-    "ruff>=0.8",
-]
+dev = ["pytest>=8", "pytest-asyncio>=1"]
 
 [build-system]
 requires = ["hatchling"]
@@ -43,13 +39,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/tgkit"]
-
-[tool.ruff]
-line-length = 110
-target-version = "py312"
-
-[tool.ruff.lint]
-select = ["E", "F", "W", "I", "UP", "B", "SIM"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

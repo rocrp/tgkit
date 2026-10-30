@@ -7,7 +7,6 @@ from typing import Any
 
 import pytest
 from fakes import api_error
-
 from tgkit.message_misc import keep_typing
 from tgkit.pacing import (
     _GROUP_MIN_UPDATE_INTERVAL,

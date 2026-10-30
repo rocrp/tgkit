@@ -49,9 +49,7 @@ async def reply_document(
     """Attach in-memory content as a document."""
     encoded = content.encode() if isinstance(content, str) else content
     file = BufferedInputFile(encoded, filename=filename)
-    return await _send_attachment(
-        lambda **kwargs: message.reply_document(document=file, **kwargs), caption=caption
-    )
+    return await _send_attachment(lambda **kwargs: message.reply_document(document=file, **kwargs), caption=caption)
 
 
 async def reply_file(
@@ -63,9 +61,7 @@ async def reply_file(
     if not file_path.exists():
         raise FileNotFoundError(f"cannot attach missing file: {file_path}")
     file = FSInputFile(file_path)
-    return await _send_attachment(
-        lambda **kwargs: message.reply_document(document=file, **kwargs), caption=caption
-    )
+    return await _send_attachment(lambda **kwargs: message.reply_document(document=file, **kwargs), caption=caption)
 
 
 async def send_typing(bot: Bot, chat_id: int, *, message_thread_id: int | None = None) -> None:

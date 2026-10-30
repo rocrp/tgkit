@@ -151,9 +151,7 @@ def _resize_animated(image: Image.Image, dest: Path, image_format: str, max_side
     for frame in ImageSequence.Iterator(image):
         frame = ImageOps.exif_transpose(frame)
         width, height = frame.size
-        resized = frame.convert("RGBA").resize(
-            _scale_dimensions(width, height, max_side), Image.Resampling.LANCZOS
-        )
+        resized = frame.convert("RGBA").resize(_scale_dimensions(width, height, max_side), Image.Resampling.LANCZOS)
         match image_format:
             case "GIF":
                 frames.append(resized.convert("P", palette=Image.Palette.ADAPTIVE))
@@ -196,9 +194,7 @@ def _prepare_image_sync(path: Path, max_dimension: int) -> tuple[Path, Path | No
             with Image.open(dest) as resized:
                 new_width, new_height = resized.size
             if max(new_width, new_height) > max_dimension:
-                raise RuntimeError(
-                    f"Resize left {path.name} above {max_dimension}px ({new_width}x{new_height})"
-                )
+                raise RuntimeError(f"Resize left {path.name} above {max_dimension}px ({new_width}x{new_height})")
             logger.info(
                 "telegram.image.resized",
                 path=str(path),
@@ -218,7 +214,7 @@ async def _cleanup(temp_dirs: Iterable[Path]) -> None:
     for temp_dir in temp_dirs:
         try:
             await asyncio.to_thread(shutil.rmtree, temp_dir, True)
-        except Exception as error:  # noqa: BLE001 - cleanup must never mask the real result
+        except Exception as error:
             logger.warning("telegram.temp.cleanup_failed", path=str(temp_dir), error=str(error))
 
 
@@ -260,11 +256,9 @@ async def prepared_images(
                     prepared.rejected.append(_too_large(path, size, max_bytes))
                     continue
                 prepared.ready.append(ReadyFile(source=path, upload=path_to_send))
-            except Exception as error:  # noqa: BLE001 - one bad image must not sink the batch
+            except Exception as error:
                 logger.error("telegram.image.prepare_failed", path=str(path), error=str(error))
-                prepared.rejected.append(
-                    MediaRejection(path=path, reason="prepare_failed", detail=_brief(error))
-                )
+                prepared.rejected.append(MediaRejection(path=path, reason="prepare_failed", detail=_brief(error)))
             finally:
                 if temp_dir:
                     temp_dirs.append(temp_dir)
@@ -352,9 +346,7 @@ async def _send_with_caption_fallback(
     """Send once with the formatted caption, once more plain if it was rejected."""
     caption_text, parse_mode = caption.take()
     try:
-        message = await call_absorbing_rate_limits(
-            lambda: send(caption=caption_text, parse_mode=parse_mode, **kwargs)
-        )
+        message = await call_absorbing_rate_limits(lambda: send(caption=caption_text, parse_mode=parse_mode, **kwargs))
         return message, bool(caption_text)
     except Exception as error:
         if not isinstance(error, TelegramAPIError) or not caption_text:
@@ -445,9 +437,7 @@ async def send_photos(
                 with suppress(TelegramAPIError):
                     result.messages.append(
                         await call_absorbing_rate_limits(
-                            lambda item=item, extra=extra: bot.send_photo(
-                                chat_id=chat_id, photo=item.media, **extra
-                            )
+                            lambda item=item, extra=extra: bot.send_photo(chat_id=chat_id, photo=item.media, **extra)
                         )
                     )
     return result

@@ -280,9 +280,7 @@ def format_text_segment(value: str) -> str:
         inner = format_text_segment(content)  # Recursive for nested
         return registry.store(f"_{inner}_")
 
-    text = re.sub(
-        r"(?<!\w)_(?!\s)(.+?)(?<!\s)_(?!\w)", lambda m: protect_italic(m.group(1)), text, flags=re.DOTALL
-    )
+    text = re.sub(r"(?<!\w)_(?!\s)(.+?)(?<!\s)_(?!\w)", lambda m: protect_italic(m.group(1)), text, flags=re.DOTALL)
     text = re.sub(r"_", r"\_", text)  # Escape remaining underscores
 
     # --- 5. Bold **...** ---

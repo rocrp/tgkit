@@ -3,7 +3,6 @@ from __future__ import annotations
 from io import BytesIO
 
 import pytest
-
 from tgkit.voice import (
     TelegramVoiceDownloadError,
     TelegramVoiceTranscriptionError,
@@ -27,10 +26,10 @@ class _Bot:
         self._file_path = file_path
         self._payload = payload
 
-    async def get_file(self, file_id: str) -> _File:  # noqa: ARG002
+    async def get_file(self, file_id: str) -> _File:
         return _File(self._file_path)
 
-    async def download_file(self, file_path: str) -> object:  # noqa: ARG002
+    async def download_file(self, file_path: str) -> object:
         return self._payload
 
 

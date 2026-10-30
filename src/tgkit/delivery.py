@@ -116,9 +116,7 @@ async def send_text(
             failures.append(
                 TierFailure(
                     tier="rich",
-                    reason=(
-                        f"{rich_len(payload.markdown)} chars over the {MAX_RICH_MESSAGE_LENGTH} rich limit"
-                    ),
+                    reason=(f"{rich_len(payload.markdown)} chars over the {MAX_RICH_MESSAGE_LENGTH} rich limit"),
                 )
             )
         else:
@@ -252,9 +250,7 @@ async def _deliver_plain(
         kwargs = context.send_kwargs(first=index == 0)
         messages.append(
             await call_absorbing_rate_limits(
-                lambda chunk=chunk, kwargs=kwargs: context.bot.send_message(
-                    text=chunk, parse_mode=None, **kwargs
-                )
+                lambda chunk=chunk, kwargs=kwargs: context.bot.send_message(text=chunk, parse_mode=None, **kwargs)
             )
         )
     return DeliveryOutcome(tier="plain", messages=messages, failures=failures)
